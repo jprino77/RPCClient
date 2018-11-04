@@ -4,6 +4,8 @@ from send import enviar
  
 from client import Service
 
+import os
+
 
 # Acciones para cada opcion.
 def getNombreUsuarioFromId():
@@ -16,8 +18,10 @@ def crearUsuario():
     
 def buscarFiliales():
     respuesta = enviar(Service.Client.buscarFiliales)
-    print("|   id    |    Nombre          |   Calle   |   Altura   |")
-    map(lambda filial: print("|   ",filial.id,"|   ",filial.nombre,"   |   ",filial.calle,"   |   ",filial.altura,"   |"),respuesta)
+
+    if respuesta != None:
+        print("|   id    |    Nombre          |   Calle   |   Altura   |")
+        map(lambda filial: print("|   ",filial.id,"|   ",filial.nombre,"   |   ",filial.calle,"   |   ",filial.altura,"   |"),respuesta)
     wait()
 
 def buscarDeporteByFilialId():
@@ -50,28 +54,35 @@ def menu(argument):
     # Ejecuto Funcion
     func()
 
-print("\nQue Desea Hacer?")
-
-seleccion = ''
-
-# Start a loop that runs until the user enters the value for 'quit'.
-while seleccion != 'q':
-
-    # Give all the choices in a series of print statements.
-    print("\n[1] getNombreUsuarioFromId")
-    print("[2] crearUsuario")
-    print("[3] buscarFiliales")
-    print("[4] buscarDeporteByFilialId")
-    print("[5] getFilialById")
-    print("[6] getDeporteById")
-    print("[q] Salir.")
-    
-    # Elijo opcion de menu
-    seleccion = raw_input("\nSeleccionar: ")
-    if seleccion != 'q':
-      menu(seleccion)
+def main():
     
     
+
+    seleccion = ''
+
+    while seleccion != 'q':
+
+        os.system('cls')  # on windows
+        os.system('clear') #Linux
+        print("\nQue Desea Hacer?")
+        # Seleccion de opciones.
+        print("\n[1] getNombreUsuarioFromId")
+        print("[2] crearUsuario")
+        print("[3] buscarFiliales")
+        print("[4] buscarDeporteByFilialId")
+        print("[5] getFilialById")
+        print("[6] getDeporteById")
+        print("[q] Salir.")
         
-# Fin de la App
-print("Aplicacion Cerrada.")
+        # Elijo opcion de menu
+        seleccion = raw_input("\nSeleccionar: ")
+        if seleccion != 'q':
+            menu(seleccion)
+    
+    os.system('cls')  # on windows
+    os.system('clear') #Linux
+    # Fin de la App
+    print("Aplicacion Cerrada.")
+
+if __name__ == "__main__":
+    main()

@@ -28,4 +28,5 @@ def enviar(metodoRemoto, *args):
     return respuesta
   
   except Thrift.TException, tx:
-    print str(tx)
+    print "Ocurrio un Error: "
+    print  "Codigo: ", tx.codigo, "Descripcion: ", tx.descripcion 
