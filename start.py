@@ -9,7 +9,20 @@ import os
 
 # Acciones para cada opcion.
 def getNombreUsuarioFromId():
-    print("\nHere's a bicycle. Have fun!\n")
+    valido = False
+    seleccion = 0
+    while valido == False:
+        try:
+            seleccion = eval(raw_input("\nIngrese id a buscar: "))
+            valido = True
+        except:
+            print('Id debe ser numerio')
+
+    respuesta = enviar(Service.Client.getNombreUsuarioFromId, seleccion)
+
+    if respuesta != None:
+        print('Nombtre de usuario: ', respuesta)
+
     wait()
     
 def crearUsuario():
