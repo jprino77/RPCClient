@@ -14,6 +14,7 @@ from thrift.protocol import TBinaryProtocol
 #  metodoRemoto : metodo que se va a ejecutar dentro del servidor
 # *args parametro de funcion a invocar
 def enviar(metodoRemoto, *args):
+  respuesta = None
   try:
     print "Iniciando Comunicacion Server..."
     transport = TSocket.TSocket('127.0.0.1', 9090)
@@ -22,11 +23,13 @@ def enviar(metodoRemoto, *args):
     client = Service.Client(protocol)
     transport.open()
     respuesta= metodoRemoto(client, *args)
-  
-    transport.close()
 
-    return respuesta
-  
   except Thrift.TException, tx:
-    print "Ocurrio un Error: "
-    print  "Codigo: ", tx.codigo, "Descripcion: ", tx.descripcion 
+    try:
+      print  "Codigo: ", tx.codigo, "Descripcion: ", tx.descripcion 
+    except:
+      print "Ocurrio un error inesperado: ", tx
+  finally:
+      transport.close()
+  
+  return respuesta

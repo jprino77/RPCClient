@@ -4,6 +4,8 @@ from send import enviar
  
 from client import Service
 
+from client.ttypes import  Usuario
+
 import os
 
 
@@ -26,7 +28,41 @@ def getNombreUsuarioFromId():
     wait()
     
 def crearUsuario():
-    print("\nHere are some running shoes. Run fast!\n")
+
+    u = Usuario()
+    
+    u.nombre = raw_input("\nNombre: ")
+    u.apellido =  raw_input("\nApellido: ")
+    u.calle =  raw_input("\nCalle: ")
+    
+    valido = False
+    while valido == False:
+        try:
+            altura = eval(raw_input("\nAltura: "))
+            valido = True
+        except:
+            print('Altura debe ser numerio')
+
+    u.altura = altura 
+
+    valido = False
+    while valido == False:
+        try:
+            localidad = eval(raw_input("\nLocalidad Id: "))
+            valido = True
+        except:
+            print('Localidad debe ser numerio')
+    u.localidad =  localidad
+    u.telefono =  raw_input("\nTelefono: ")
+    u.email =  raw_input("\nEmail: ")
+    u.fechaNAcimiento =  raw_input("\nFecha Nacimiento: ")
+    u.usuario =  raw_input("\nUsuario: ")
+    u.clave =  raw_input("\nClave: ")
+
+    respuesta = enviar(Service.Client.crearUsuario, u)
+    if respuesta != None:
+        print(respuesta)
+
     wait()
     
 def buscarFiliales():
@@ -38,15 +74,61 @@ def buscarFiliales():
     wait()
 
 def buscarDeporteByFilialId():
-    print("\nHere's a map. Can you leave a trip plan for us?\n")
+    valido = False
+    seleccion = 0
+
+    while valido == False:
+        try:
+            seleccion = eval(raw_input("\nIngrese id a buscar: "))
+            valido = True
+        except:
+            print('Id debe ser numerio')
+    
+    respuesta = enviar(Service.Client.buscarDeporteByFilialId, seleccion)
+
+    if respuesta != None:
+        
+        print("|   id |    codigo |   descripcion   |")
+        map(lambda deporte: print("|   ",deporte.id,"|   ",deporte.codigo,"|   ",deporte.descripcion,"   |"),respuesta)
+
     wait()
 
 def getFilialById():
-    print("\nHere's a map. Can you leave a trip plan for us?\n")
+    valido = False
+    seleccion = 0
+
+    while valido == False:
+        try:
+            seleccion = eval(raw_input("\nIngrese id a buscar: "))
+            valido = True
+        except:
+            print('Id debe ser numerio')
+    
+    respuesta = enviar(Service.Client.getFilialById, seleccion)
+
+    if respuesta != None:
+        
+        print("\nId: ",respuesta.id,"\nNombre: ",respuesta.nombre,"\nCalle: ",respuesta.calle,"\nAltura: ", respuesta.altura)
+
     wait()
 
 def getDeporteById():
-    print("\nHere's a map. Can you leave a trip plan for us?\n")
+    valido = False
+    seleccion = 0
+
+    while valido == False:
+        try:
+            seleccion = eval(raw_input("\nIngrese id a buscar: "))
+            valido = True
+        except:
+            print('Id debe ser numerio')
+    
+    respuesta = enviar(Service.Client.getDeporteById, seleccion)
+
+    if respuesta != None:
+        
+        print("\nId: ",respuesta.id,"\nCodigo: ",respuesta.codigo,"\nDescripcion: ",respuesta.descripcion)
+
     wait()
 
 def wait():
