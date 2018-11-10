@@ -13,3 +13,5 @@ Client para Tp2 RPC Sistemas Distribuidos 2018
 # Para iniciar la app
 
 Ejecutar start.py
+
+# Para modificar la ip y puerto del server hacerlo dentro de send.py en la linea  TSocket.TSocket('192.168.1.102', 9090)
